@@ -7,6 +7,10 @@ React-based headless library for SuprSend, a fork aimed at updating and adhering
 ```sh
 npm install @nhcorrea/suprsend-react-headless
 ```
+OR
+```sh
+yarn add @nhcorrea/suprsend-react-headless
+```
 
 ## Contributing
 
