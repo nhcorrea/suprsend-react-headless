@@ -27,12 +27,13 @@
   ],
   "scripts": {
     "example": "yarn workspace @nhcorrea/suprsend-react-headless-example",
-    "typecheck": "npx tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
     "release": "release-it",
-    "clean-modules": "rm -rf ./node_modules && yarn"
+    "clean-modules": "rm -rf ./node_modules && yarn",
+    "pre-release": "yarn typecheck && yarn lint"
   },
   "keywords": [
     "react-native",
