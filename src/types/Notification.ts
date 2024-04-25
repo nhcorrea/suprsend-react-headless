@@ -1,12 +1,27 @@
+interface Actions {
+  url: string;
+  name: string;
+}
+
+interface Avatar {
+  avatar_url?: string;
+  action_url?: string;
+}
+
+interface SubText {
+  text?: string;
+  action_url?: string;
+}
+
 interface RemoteNotificationMessage {
   header: string;
   schema: string;
   text: string;
   url: string;
   extra_data?: string;
-  actions?: { url: string; name: string }[];
-  avatar?: { avatar_url?: string; action_url?: string };
-  subtext?: { text?: string; action_url?: string };
+  actions?: Actions[];
+  avatar?: Avatar;
+  subtext?: SubText;
 }
 
 export interface RemoteNotification {
@@ -20,4 +35,9 @@ export interface RemoteNotification {
 
 export interface Notification extends RemoteNotification {
   markClicked: () => void;
+}
+
+export interface ResponseNotification {
+  results: RemoteNotification[];
+  unread: number;
 }

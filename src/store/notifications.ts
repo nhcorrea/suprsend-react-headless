@@ -15,11 +15,6 @@ interface IInternalStorage {
   subscriberId: string;
 }
 
-interface IResponse {
-  results: RemoteNotification[];
-  unread: number;
-}
-
 export const useNotificationStore = create<NotificationStore>()((set, get) => ({
   notifications: [],
   unSeenCount: 0,
@@ -36,7 +31,7 @@ export const useNotificationStore = create<NotificationStore>()((set, get) => ({
 
     try {
       const response = await getNotifications(currentFetchFrom);
-      const data = (await response.json()) as IResponse;
+      const data = response.data;
 
       const newNotifications = isFirstCall
         ? [...data.results]
@@ -84,8 +79,10 @@ export const useNotificationStore = create<NotificationStore>()((set, get) => ({
       : currentTimeStamp; //get last month time stamp
     try {
       const response = await getNotifications(fetchFrom, lastFetchedOn);
-      const data = (await response.json()) as IResponse;
+      const data = response.data;
+
       const newNotifications = [...thisStore.notifications, ...data.results];
+
       set(() => ({
         notifications: newNotifications,
         firstFetchedOn: fetchFrom,
@@ -129,7 +126,7 @@ export const useNotificationStore = create<NotificationStore>()((set, get) => ({
   markAllSeen: async () => {
     try {
       const res = await markBellClicked();
-      if (!res.ok) return;
+      if (res.status !== 200) return;
       set((store: NotificationStore) => ({ ...store, unSeenCount: 0 }));
     } catch (e) {
       console.log('SUPRSEND: error marking all notifications seen', e);
